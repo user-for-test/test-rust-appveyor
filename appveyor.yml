@@ -28,4 +28,4 @@ provider: GitHub
   
 branches:
   only:
-	- /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+	- /^v\d+\.\d+\.\d+.*$/
