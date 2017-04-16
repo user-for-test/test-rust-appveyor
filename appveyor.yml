@@ -1,23 +1,33 @@
 environment:
+  global:
+    RUST_VERSION: stable
+    CRATE_NAME: rubigo
+
   matrix:
-  - TARGET: x86_64-pc-windows-msvc
-install:
-  - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-${env:TARGET}.exe"
-  - rust-nightly-%TARGET%.exe /VERYSILENT /NORESTART /DIR="C:\Program Files (x86)\Rust"
-  - set PATH=%PATH%;C:\Program Files (x86)\Rust\bin
-  - if defined MSYS_BITS set PATH=C:\msys64\mingw%MSYS_BITS%\bin;C:\msys64\usr\bin;%PATH%
-  - set CARGO_TARGET_DIR=%APPVEYOR_BUILD_FOLDER%\target
-  - rustc -V
-  - cargo -V
+    - TARGET: i686-pc-windows-msvc
+    - TARGET: x86_64-pc-windows-msvc
 
 build: false
+
+install:
+  - ps: >-
+      If ($Env:TARGET -eq 'x86_64-pc-windows-gnu') {
+        $Env:PATH += ';C:\msys64\mingw64\bin'
+      } ElseIf ($Env:TARGET -eq 'i686-pc-windows-gnu') {
+        $Env:PATH += ';C:\msys64\mingw32\bin'
+      }
+  - curl -sSf -o rustup-init.exe https://win.rustup.rs/
+  - rustup-init.exe -y --default-host %TARGET% --default-toolchain %RUST_VERSION%
+  - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
+  - rustc -Vv
+  - cargo -V
 
 test_script:
   - cargo test --target %TARGET%
   - cargo build --release --target %TARGET%
   
 deploy:
-  artifact: /.*\.exe/
+  artifact: "target\$($Env:TARGET)\release\rubigo.exe"
   auth_token:
     secure: 93nJ+rWEJDyGYR0iJ7AeJuUbzrZ2+YxjPT1AfJkBlJxkUMhjpVgKh5yKlrrLQMjq
   description: ''
