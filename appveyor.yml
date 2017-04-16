@@ -1,7 +1,6 @@
 environment:
   matrix:
   - TARGET: x86_64-pc-windows-msvc
-  - TARGET: i686-pc-windows-msvc
 install:
   - ps: Start-FileDownload "https://static.rust-lang.org/dist/rust-nightly-${env:TARGET}.exe"
   - rust-nightly-%TARGET%.exe /VERYSILENT /NORESTART /DIR="C:\Program Files (x86)\Rust"
@@ -16,3 +15,17 @@ build: false
 test_script:
   - cargo test --target %TARGET%
   - cargo build --release --target %TARGET%
+  
+deploy:
+  artifact: /.*\.exe/
+  auth_token:
+    secure: 93nJ+rWEJDyGYR0iJ7AeJuUbzrZ2+YxjPT1AfJkBlJxkUMhjpVgKh5yKlrrLQMjq
+  description: ''
+  on:
+    RUST_VERSION: stable
+    appveyor_repo_tag: true
+provider: GitHub
+  
+branches:
+  only:
+	- /^v\d+\.\d+(\.\d+)?(-\S*)?$/
