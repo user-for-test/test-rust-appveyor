@@ -1,0 +1,6 @@
+[package]
+name = "test-appveyor"
+version = "0.1.0"
+authors = ["yaa110 <yaa110@gmail.com>"]
+
+[dependencies]
