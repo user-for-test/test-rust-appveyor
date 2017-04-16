@@ -25,15 +25,13 @@ test_script:
   - cargo test --target %TARGET%
   - cargo build --release --target %TARGET%
 
-after_build:
+before_deploy:
   - 7z a rubigo-%TARGET%.zip %APPVEYOR_BUILD_FOLDER%\target\%TARGET%\release\*.exe
+  - appveyor PushArtifact rubigo-%TARGET%.zip
 
-artifacts: 
-  - path: rubigo-%TARGET%.zip
-    name: mypackage
   
 deploy:
-  artifact: mypackage
+  artifact: rubigo-%TARGET%.zip
   auth_token:
     secure: 93nJ+rWEJDyGYR0iJ7AeJuUbzrZ2+YxjPT1AfJkBlJxkUMhjpVgKh5yKlrrLQMjq
   description: ''
