@@ -27,7 +27,7 @@ test_script:
   - cargo build --release --target %TARGET%
   
 deploy:
-  artifact: "target\$($Env:TARGET)\release\rubigo.exe"
+  artifact: target\$($Env:TARGET)\release\rubigo.exe
   auth_token:
     secure: 93nJ+rWEJDyGYR0iJ7AeJuUbzrZ2+YxjPT1AfJkBlJxkUMhjpVgKh5yKlrrLQMjq
   description: ''
