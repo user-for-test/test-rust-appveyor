@@ -22,10 +22,6 @@ deploy:
     secure: 93nJ+rWEJDyGYR0iJ7AeJuUbzrZ2+YxjPT1AfJkBlJxkUMhjpVgKh5yKlrrLQMjq
   description: ''
   on:
-    RUST_VERSION: stable
     appveyor_repo_tag: true
 provider: GitHub
-  
-branches:
-  only:
-	- /^v\d+\.\d+\.\d+.*$/
+
