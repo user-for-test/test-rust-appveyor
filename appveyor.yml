@@ -24,9 +24,13 @@ install:
 test_script:
   - cargo test --target %TARGET%
   - cargo build --release --target %TARGET%
+
+artifacts: 
+  - path: target\$($Env:TARGET)\release\*.exe
+    name: mypackage
   
 deploy:
-  artifact: target\$($Env:TARGET)\release\rubigo.exe
+  artifact: mypackage
   auth_token:
     secure: 93nJ+rWEJDyGYR0iJ7AeJuUbzrZ2+YxjPT1AfJkBlJxkUMhjpVgKh5yKlrrLQMjq
   description: ''
