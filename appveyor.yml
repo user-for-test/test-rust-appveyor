@@ -26,7 +26,7 @@ test_script:
   - cargo build --release --target %TARGET%
 
 artifacts: 
-  - path: target\$($Env:TARGET)\release\*.exe
+  - path: target\%TARGET%\release\*.exe
     name: mypackage
   
 deploy:
