@@ -25,7 +25,7 @@ test_script:
   - cargo test --target %TARGET%
   - cargo build --release --target %TARGET%
 
-before_deploy:
+after_build:
   - 7z a rubigo-%TARGET%.zip %APPVEYOR_BUILD_FOLDER%\target\%TARGET%\release\*.exe
 
 artifacts: 
