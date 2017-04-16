@@ -23,5 +23,5 @@ deploy:
   description: ''
   on:
     appveyor_repo_tag: true
-provider: GitHub
+  provider: GitHub
 
